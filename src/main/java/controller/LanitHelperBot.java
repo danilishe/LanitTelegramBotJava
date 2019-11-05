@@ -80,11 +80,11 @@ public class LanitHelperBot extends TelegramLongPollingBot {
             //todo переделать на запрос в начале: полное расписание? на ближайшие полчаса? час? дату? -> полное расписание, время
             return new SendMessage()
                     .setChatId(chatId)
-                    .setText("@" + message.getReplyToMessage().getFrom().getUserName() + " " + (
+                    .setText(
                             schedule.isEmpty() ?
                                     String.format(Config.NO_ROUTES, Config.DEFAULT_SCHEDULE_DURATION, direction, TransportRepo.getNext(direction, LocalDateTime.now()))
                                     : String.format(Config.AVAILABLE_ROUTES, Config.DEFAULT_SCHEDULE_DURATION, direction, String.join("\n", schedule))
-                    ));
+                    );
         }
         log.error("Некорректный CallBackQuery:\n" + callbackQuery.toString());
         return null;
@@ -102,7 +102,7 @@ public class LanitHelperBot extends TelegramLongPollingBot {
                     .setReplyToMessageId(message.getMessageId())
                     .setText(Config.SELECT_DIRECTION)
                     .setReplyMarkup(new InlineKeyboardMarkup().setKeyboard(
-                            Arrays.asList(directions.stream().map(d -> new InlineKeyboardButton(d).setCallbackData(d)).collect(Collectors.toList()))
+                            directions.stream().map(d -> Arrays.asList(new InlineKeyboardButton(d).setCallbackData(d))).collect(Collectors.toList())
                     ));
         } else if (command.matches("/help\\b.*")) {
             return new SendMessage()
@@ -115,8 +115,18 @@ public class LanitHelperBot extends TelegramLongPollingBot {
                             "Мы надеемся, что нашего бота работа будет способствовать вашей эффективности."
                     );
 //                    sendMessage.setText(new String(Files.readAllBytes(Paths.get("help.md"))));
+        } else if (command.matches("/start\\b.*")) {
+            return new SendMessage()
+                    .setChatId(chatId)
+                    .setText("Привет! Для помощи выбери /help а для получения информации по маршруткам (пока только для офиса на Мурманской в Москве) выбери /transport");
+        } else if (command.matches("/settings\\b.*")) {
+            return new SendMessage()
+                    .setChatId(chatId)
+                    .setText("Пока настроек нет \uD83D\uDE14");
         }
-        return null;
+        return new SendMessage()
+                .setChatId(chatId)
+                .setText("Я пока не понимаю \uD83E\uDD16");
     }
 
     private SendMessage dispatchEditedMessage(Message editedMessage) {
