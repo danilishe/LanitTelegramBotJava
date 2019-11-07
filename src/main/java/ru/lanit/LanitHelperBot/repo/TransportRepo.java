@@ -1,7 +1,7 @@
-package repo;
+package ru.lanit.LanitHelperBot.repo;
 
-import controller.Config;
-import util.CalendarHelper;
+import ru.lanit.LanitHelperBot.Config;
+import ru.lanit.LanitHelperBot.util.CalendarHelper;
 
 import java.time.Duration;
 import java.time.LocalDate;

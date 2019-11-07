@@ -1,13 +1,10 @@
-package controller;
+package ru.lanit.LanitHelperBot;
 
-import model.User;
+import ru.lanit.LanitHelperBot.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.ApiContext;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -15,8 +12,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import repo.TransportRepo;
-import repo.UserRepo;
+import ru.lanit.LanitHelperBot.repo.TransportRepo;
+import ru.lanit.LanitHelperBot.repo.UserRepo;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -26,26 +23,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class LanitHelperBot extends TelegramLongPollingBot {
-    final static private Logger log = LogManager.getLogger("Bot");
+    final private Logger log = LogManager.getLogger("Bot");
     final private UserRepo userRepo = new UserRepo();
 
     public LanitHelperBot(DefaultBotOptions options) {
         super(options);
-    }
-
-    public static void main(String[] args) {
-        ApiContextInitializer.init();
-
-        DefaultBotOptions options = ApiContext.getInstance(DefaultBotOptions.class);
-        options.setBaseUrl(Config.PROXY);
-
-        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
-        try {
-            telegramBotsApi.registerBot(new LanitHelperBot(options));
-            log.info("Bot started.");
-        } catch (TelegramApiException e) {
-            log.error("Не удалось запустить бота", e);
-        }
     }
 
     public void onUpdateReceived(Update update) {
@@ -138,6 +120,6 @@ public class LanitHelperBot extends TelegramLongPollingBot {
     }
 
     public String getBotToken() {
-        return Config.TOKEN;
+        return System.getProperty("telegram.token");
     }
 }

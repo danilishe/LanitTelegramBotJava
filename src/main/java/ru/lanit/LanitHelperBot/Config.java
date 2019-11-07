@@ -1,16 +1,8 @@
-package controller;
+package ru.lanit.LanitHelperBot;
 
-import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 public class Config {
-    static {
-        try {
-            System.getProperties().load(ClassLoader.getSystemResourceAsStream("config.properties"));
-        } catch (IOException e) {
-            throw new RuntimeException("Отсутствует файл с токеном");
-        }
-    }
     public static final String PROXY = "https://telegg.ru/orig/bot";
     public static final String SELECT_DIRECTION = "В какую сторону?";
     public static final String NO_ROUTES = "В ближайшие %s минут по направлению _%s_ не будет. Ближайший: *%s*";
@@ -21,7 +13,6 @@ public class Config {
     public static final int MAX_DAYS = 15;
 
     public static final String BOT_NAME = LanitHelperBot.class.getSimpleName();
-    public static final String TOKEN = System.getProperty("telegram.token");
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
 }

@@ -1,7 +1,7 @@
-package repo;
+package ru.lanit.LanitHelperBot.repo;
 
 
-import model.User;
+import ru.lanit.LanitHelperBot.model.User;
 
 public class UserRepo {
     private static final User anonymous = new User()

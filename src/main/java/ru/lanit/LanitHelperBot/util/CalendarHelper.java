@@ -1,4 +1,4 @@
-package util;
+package ru.lanit.LanitHelperBot.util;
 
 import java.time.LocalDate;
 import java.util.HashMap;

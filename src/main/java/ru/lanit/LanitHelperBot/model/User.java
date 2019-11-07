@@ -1,4 +1,4 @@
-package model;
+package ru.lanit.LanitHelperBot.model;
 
 import java.util.HashSet;
 import java.util.Set;
